@@ -16,7 +16,7 @@ APC.init = function (id, debugging) {
 
 	engine.beginTimer(2000,"APC.fx_eq_load_init",true);
 	engine.beginTimer(4000,"APC.fx_echo_load_init",true);
-	engine.beginTimer(8000,"APC.print_fx_specs",true);
+	//engine.beginTimer(8000,"APC.print_fx_specs",true);
 
 	//engine.connectControl("[Master]","PeakIndicator","APC.onPeakMaster");
 	engine.connectControl("[Channel1]","PeakIndicator","APC.onPeakDeck");
