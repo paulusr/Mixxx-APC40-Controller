@@ -160,7 +160,7 @@ APC.set_knob_values = function() {
 }
 
 APC.set_pad_values = function() {
-	print("set_pad_values...");
+	//print("set_pad_values...");
 	var groups = [ '[Channel1]', '[Channel2]' ];
 	var pads = [
 		'spinback',
@@ -177,7 +177,7 @@ APC.set_pad_values = function() {
 		cfg = APC.midi_config[ groups[i] ];
 		for (var j = 0; j < length; j++) {
 			var pad = pads[j];
-			print("set pad: " + cfg[pad]['status'] +','+ cfg[pad]['note'] +','+ cfg[pad]['value']);
+			//print("set pad: " + cfg[pad]['status'] +','+ cfg[pad]['note'] +','+ cfg[pad]['value']);
 			midi.sendShortMsg( cfg[pad]['status'], cfg[pad]['note'], cfg[pad]['value'] );
 		}
 	}
@@ -189,7 +189,7 @@ APC.set_pad_values = function() {
 	cfg = APC.midi_config['[Master]'];
 	for (var j = 0; j < length; j++) {
 		var pad = pads[j];
-		print("set pad: " + cfg[pad]['status'] +','+ cfg[pad]['note'] +','+ cfg[pad]['value']);
+		//print("set pad: " + cfg[pad]['status'] +','+ cfg[pad]['note'] +','+ cfg[pad]['value']);
 		midi.sendShortMsg( cfg[pad]['status'], cfg[pad]['note'], cfg[pad]['value'] );
 	}
 }
