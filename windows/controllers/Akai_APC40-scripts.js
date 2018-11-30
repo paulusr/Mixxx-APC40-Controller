@@ -250,8 +250,8 @@ APC.reset_gain = function (channel, control, value, status, group) {
 // FX Specs
 // --------------------------
 
-APC.print_fx_specs = function() {
-	//print("print_fx_specs...");
+APC.print_fx_specs = function() { // keep print
+	print("print_fx_specs...");
 	APC.print_fx_unit_specs(	"[EffectRack1_EffectUnit1]");
 	APC.print_fx_effect_specs(	"[EffectRack1_EffectUnit1_Effect1]");
 	APC.print_fx_unit_specs(	"[EffectRack1_EffectUnit2]");
