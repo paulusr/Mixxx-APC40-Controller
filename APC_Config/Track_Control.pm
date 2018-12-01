@@ -15,7 +15,7 @@ sub track_control {
 			on  => { group => '[Channel1]', key => 'pregain' },
 		},
 		row_2_knob_2  => {
-			on  => { group => '[Channel1]', key => 'APC.super_filter' },
+			on  => { group => '[QuickEffectRack1_[Channel1]]', key => 'super1' },
 		},
 
 		row_1_knob_3  => {
@@ -28,7 +28,7 @@ sub track_control {
 			on  => { group => '[Channel2]', key => 'pregain' },
 		},
 		row_2_knob_4  => {
-			on  => { group => '[Channel2]', key => 'APC.super_filter' },
+			on  => { group => '[QuickEffectRack1_[Channel2]]', key => 'super1' },
 		},
 
 		row_1_btn_1  => {
