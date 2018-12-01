@@ -47,6 +47,8 @@ APC.midi_config = {
 		'filter':		{ 'status': 0xB0, 'note': 0x35 }, // r2_knob2
 		'gain':			{ 'status': 0xB0, 'note': 0x31 }, // r1_knob2
 
+		'filter_btn':	{ 'status': 0x90, 'note': 0x58 }, // r3_btn2
+
 		'loop_on':		{ 'status': 0x90, 'note': 0x39, 'value': 4 }, // tr1_row5 red flash
 		'loop_off':		{ 'status': 0x80, 'note': 0x39, 'value': 0 }, // tr1_row5
 		'spinback':		{ 'status': 0x91, 'note': 0x34, 'value': 1 }, // tr2_row6
@@ -64,6 +66,8 @@ APC.midi_config = {
 		'mid':			{ 'status': 0xB0, 'note': 0x36 }, // r2_knob3
 		'filter':		{ 'status': 0xB0, 'note': 0x37 }, // r2_knob4
 		'gain':			{ 'status': 0xB0, 'note': 0x33 }, // r1_knob4
+
+		'filter_btn':	{ 'status': 0x90, 'note': 0x5A }, // r3_btn4
 
 		'loop_on':		{ 'status': 0x93, 'note': 0x39, 'value': 4 }, // tr4_row5 red flash
 		'loop_off':		{ 'status': 0x83, 'note': 0x39, 'value': 0 }, // tr4_row5
@@ -239,11 +243,26 @@ APC.reset_master_gain = function (channel, control, value, status, group) {
 }
 
 APC.reset_gain = function (channel, control, value, status, group) {
-	engine.setParameter( group, 'pregain', 0.5 );
-	var cfg = APC.midi_config[group]['gain'];
-	midi.sendShortMsg(cfg['status'], cfg['note'], 64 );
+	if ( APC.shift ) {
+		engine.setParameter( group, 'pregain', 0.5 );
+		var cfg = APC.midi_config[group]['gain'];
+		midi.sendShortMsg(cfg['status'], cfg['note'], 64 );
+	}
+	else {
+		var cfg = APC.fx_eq3_config[group];
+		var mcfg = APC.midi_config[group]['filter_btn'];
+		if (cfg['filter_on']) {
+			engine.setValue(cfg['filter'], 'enabled', 0);
+			midi.sendShortMsg(mcfg['status'], mcfg['note'], 0);
+			cfg['filter_on'] = false;
+		}
+		else {
+			engine.setValue(cfg['filter'], 'enabled', 1);
+			midi.sendShortMsg(mcfg['status'], mcfg['note'], 1);
+			cfg['filter_on'] = true;
+		}
+	}
 }
-
 
 
 // --------------------------
@@ -1783,12 +1802,14 @@ APC.fx_eq3_config = {
 		effect: '[EffectRack1_EffectUnit2_Effect1]',
     	filter: '[QuickEffectRack1_[Channel1]]',
     	filter_reset: 0,
+    	filter_on: true,
 	},
 	'[Channel2]': {
 		unit: '[EffectRack1_EffectUnit3]',
 		effect: '[EffectRack1_EffectUnit3_Effect1]',
     	filter: '[QuickEffectRack1_[Channel2]]',
     	filter_reset: 0,
+    	filter_on: true,
 	},
 };
 
@@ -1817,6 +1838,10 @@ APC.fx_eq8_load = function() {
 APC.fx_eq3_load = function(group) {
 	print('fx_eq3_load');
 	var cfg = APC.fx_eq3_config[group];
+	var mcfg = APC.midi_config[group]['filter_btn'];
+	midi.sendShortMsg(mcfg['status'], mcfg['note'], 0);
+	midi.sendShortMsg(mcfg['status'], mcfg['note'], 1);
+
 	var unit = cfg['unit'];
 	var effect = cfg['effect'];
 	for (var i = 1; i <= 3; i++) {
@@ -1826,6 +1851,11 @@ APC.fx_eq3_load = function(group) {
 	engine.setValue(unit, 'enabled', 1);
 	engine.setValue(unit, 'group_' + group + '_enable', 1);
 	engine.setValue(effect, 'enabled', 1);
+
+	var filter = cfg['filter'];
+	engine.setValue(filter, 'enabled', 0);
+	cfg['filter_on'] = false;
+	midi.sendShortMsg(mcfg['status'], mcfg['note'], 0);
 }
 
 APC.fx_eq8_load_values_init = function() {

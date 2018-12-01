@@ -13,10 +13,10 @@ my $Note_Map = APC_Config::APC_Note_Map->new;
 use APC_Config;
 my $Mixxx = APC_Config->new;
 
-my $path_pfx = '/Users/macuser/Documents/Mixxx-dev/Mixxx Software/Akai XML-2/';
+my $path_pfx = '/Users/macuser/Documents/Mixxx-dev/github-sandbox/';
 
 # ---
-my $path = $path_pfx . 'a_brake/';
+my $path = $path_pfx . 'track_on-off-';
 # ---
 
 use APC_Config::Default;

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<MixxxControllerPreset mixxxVersion="" schemaVersion="1">
+    <info/>
+    <controller id="Akai_APC40">
+		<scriptfiles>
+			<file filename="Akai_APC40-scripts.js" functionprefix="APC"/>
+			[% script2 %]
+		</scriptfiles>
+
+		<!-- CONTROLS -->
+        <controls>
+
+[% FOREACH control IN controls %]
+			<control>
+				<group>[% control.group %]</group>
+				<key>[% control.key %]</key>
+				<status>[% control.status %]</status>
+				<midino>[% control.midino %]</midino>
+[% IF control.options -%]
+				<options><[% control.options %]/></options>
+[%- ELSE -%]
+				<options><normal/></options>
+[%- END %]
+			</control>
+[% END %]
+
+
+
+
+        </controls>
+		<!-- /CONTROLS -->
+
+
+		<!-- OUTPUTS -->
+		<outputs>
+
+[% FOREACH output IN outputs %]
+			<output>
+				<group>[% output.group %]</group>
+				<key>[% output.key %]</key>
+				<status>[% output.status %]</status>
+				<midino>[% output.midino %]</midino>
+[% IF output.min -%]
+				<minimum>[% output.min %]</minimum>[% END %]
+[% IF output.max -%]
+				<maximum>[% output.max %]</maximum>[% END %]
+[% IF output.on -%]
+				<on>[% output.on %]</on>[% END %]
+[% IF output.off -%]
+				<off>[% output.off %]</off>[% END %]
+			</output>
+[% END %]
+
+
+
+		</outputs>
+		<!-- /OUTPUTS -->
+
+    </controller>
+</MixxxControllerPreset>
